@@ -35,5 +35,52 @@ router.post('/', (req, res) => {
       });
   });
   
+
+  // UPDATE
+  // Edita la contraseña.
+  router.put('/:id/password', async (req, res) => {
+    const userId = req.params.id;
+    const newPassword = req.body.newPassword;
+  
+    try {
+      const user = await User.findByIdAndUpdate(
+        userId,
+        { password: newPassword },
+        { new: true }
+      );
+  
+      if (!user) {
+        return res.status(404).send('User not found');
+      }
+  
+      res.send(user);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Error updating user');
+    }
+  });
+
+  // Edita el usuario.
+  router.put('/:id/username', async (req, res) => {
+    const userId = req.params.id;
+    const newUsername = req.body.newUsername;
+  
+    try {
+      const user = await User.findByIdAndUpdate(
+        userId,
+        { username: newUsername },
+        { new: true }
+      );
+  
+      if (!user) {
+        return res.status(404).send('User not found');
+      }
+  
+      res.send(user);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Error updating user');
+    }
+  });  
   
 module.exports = router;

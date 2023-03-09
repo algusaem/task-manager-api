@@ -47,5 +47,22 @@ router.post('/', (req, res) => {
     });
 });
 
+// PUT
+// Actualiza el nombre de una lista.
+router.put('/:id', (req, res) => {
+  const id = req.params.id;
+  const name = req.body.name;
+
+  List.findByIdAndUpdate(id, { name: name }, { new: true })
+    .then((list) => {
+      if (!list) {
+        return res.status(404).send('List not found');
+      }
+      res.send(list);
+    })
+    .catch((error) => {
+      res.status(500).send('Error updating list in database');
+    });
+});
 
 module.exports = router;

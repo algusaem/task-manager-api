@@ -49,5 +49,18 @@ router.post('/', (req, res) => {
     });
 });
 
+// PUT
+// Actualiza una tarea por su nombre
+router.put('/name/:name', (req, res) => {
+  const taskName = req.params.name;
+
+  Task.findOneAndUpdate({ name: taskName }, req.body, { new: true })
+    .then((task) => {
+      res.send(task);
+    })
+    .catch((error) => {
+      res.status(500).send('Error updating task');
+    });
+});
 
 module.exports = router;
