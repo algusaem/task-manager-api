@@ -1,6 +1,11 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
+const bodyParser = require('body-parser');
+
+// Parse incoming JSON requests
+app.use(bodyParser.json());
+
 
 // Import Routes
 const userRoutes = require('./routes/userRoutes');

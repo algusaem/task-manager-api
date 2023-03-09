@@ -2,6 +2,7 @@ const express = require('express');
 const List = require('../models/listSchema');
 const router = express.Router();
 
+//GET
 // Devuelve todas las listas.
 router.get('/', (req, res) => {
     List.find({})
@@ -26,4 +27,25 @@ router.get('/:username', (req, res) => {
         });
 });
   
+
+// POST
+// Crea una nueva lista.
+router.post('/', (req, res) => {
+  const { username, name } = req.body;
+
+  const newList = new List({
+    username: username,
+    name: name,
+  });
+
+  newList.save()
+    .then((list) => {
+      res.send(list);
+    })
+    .catch((error) => {
+      res.status(500).send('Error saving list to database');
+    });
+});
+
+
 module.exports = router;
