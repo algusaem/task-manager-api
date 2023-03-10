@@ -49,7 +49,7 @@ router.post('/', (req, res) => {
     });
 });
 
-// PUT
+// UPDATE
 // Actualiza una tarea por su nombre
 router.put('/name/:name', (req, res) => {
   const taskName = req.params.name;
@@ -62,5 +62,23 @@ router.put('/name/:name', (req, res) => {
       res.status(500).send('Error updating task');
     });
 });
+
+// DELETE
+// Borra una tarea por su nombre.
+router.delete('/:name', (req, res) => {
+  const taskName = req.params.name;
+
+  Task.findOneAndDelete({ name: taskName })
+    .then((task) => {
+      if (!task) {
+        return res.status(404).send('Task not found');
+      }
+      res.send(task);
+    })
+    .catch((error) => {
+      res.status(500).send('Error deleting task from database');
+    });
+});
+
 
 module.exports = router;

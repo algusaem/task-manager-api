@@ -47,7 +47,7 @@ router.post('/', (req, res) => {
     });
 });
 
-// PUT
+// UPDATE
 // Actualiza el nombre de una lista.
 router.put('/:id', (req, res) => {
   const id = req.params.id;
@@ -64,5 +64,23 @@ router.put('/:id', (req, res) => {
       res.status(500).send('Error updating list in database');
     });
 });
+
+// DELETE
+// Borra una lista.
+router.delete('/:id', (req, res) => {
+  const id = req.params.id;
+
+  List.findByIdAndDelete(id)
+    .then((list) => {
+      if (!list) {
+        return res.status(404).send('List not found');
+      }
+      res.send(list);
+    })
+    .catch((error) => {
+      res.status(500).send('Error deleting list from database');
+    });
+});
+
 
 module.exports = router;
