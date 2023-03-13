@@ -63,6 +63,22 @@ router.put('/name/:name', (req, res) => {
     });
 });
 
+// UPDATE
+// Actualiza el listname de todas las tareas con un listname dado
+router.put('/listname/:listname', (req, res) => {
+  const oldListname = req.params.listname;
+  const newListname = req.body.newListname;
+
+  Task.updateMany({ listname: oldListname }, { $set: { listname: newListname } })
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((error) => {
+      res.status(500).send('Error updating tasks');
+    });
+});
+
+
 // DELETE
 // Borra una tarea por su nombre.
 router.delete('/:name', (req, res) => {
